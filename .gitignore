@@ -2,6 +2,10 @@
 
 .vscode/
 
+### Files ###
+
+NotAVim
+
 ### C ###
 # Prerequisites
 *.d
