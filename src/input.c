@@ -41,6 +41,8 @@ void editorMoveCursor(int key){
 }
 
 void editorProcessKeypress(void){
+    static int quitTimes = NOTAVIM_QUIT_TIMES;
+
     int c = editorReadKey();
 
     switch(c){
@@ -49,6 +51,12 @@ void editorProcessKeypress(void){
             break;
 
         case CTRL_KEY('q'):
+        if (E.dirty && quitTimes > 0){
+            editorSetStatusMessage("WARNING!!! File has unsaved changes. "
+                "Press Ctrl-Q %d more times to quit.", quitTimes);
+            quitTimes--;
+            return;
+        }
         write(STDOUT_FILENO, "\x1b[2J", 4);
         write(STDOUT_FILENO, "\x1b[H", 3);
         exit(0);
@@ -70,7 +78,8 @@ void editorProcessKeypress(void){
         case BACKSPACE:
         case CTRL_KEY('h'):
         case DEL_KEY:
-            //TODO
+            if (c == DEL_KEY) editorMoveCursor(ARROW_RIGHT);
+            editorDelChar();
             break;
 
         case PAGE_UP:
@@ -104,4 +113,6 @@ void editorProcessKeypress(void){
             editorInsertChar(c);
             break;
     }
+
+    quitTimes = NOTAVIM_QUIT_TIMES;
 }

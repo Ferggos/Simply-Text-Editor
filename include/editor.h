@@ -18,7 +18,8 @@
 #include <sys/types.h>
 
 #define NOTAVIM_VERSION "0.0.1"
-#define NOTAVIM_TAB_STOP 8
+#define NOTAVIM_TAB_STOP 8 
+#define NOTAVIM_QUIT_TIMES 3
 
 #define CTRL_KEY(k) ((k) & 0x1f)
 
@@ -58,6 +59,7 @@ struct editorConfig {
     int screencols;
     int numrows;
     erow *row;
+    int dirty;
     char *filename;
     char statusmsg[80];
     time_t statusmsg_time;
@@ -75,8 +77,13 @@ int getWindowSize(int* rows, int* cols);
 int editorRowCxToRx(erow *row, int cx);
 void editorUpdateRow(erow *row);
 void editorAppendRow(char* s, size_t len);
+void editorFreeRow(erow *row);
+void editorDelRow(int at);
 void editorRowInsertChar(erow *row, int at, int c);
+void editorRowAppendString(erow *row, char *s, size_t len);
+void editorRowDelChar(erow *row, int at);
 void editorInsertChar(int c);
+void editorDelChar(void);
 char *editorRowsToString(int *buflen);
 void editorOpen(char *filename);
 void editorSave(void);
