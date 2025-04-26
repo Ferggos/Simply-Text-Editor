@@ -6,6 +6,7 @@
 #define _GNU_SOURCE
 
 #include <errno.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <termios.h>
@@ -29,6 +30,7 @@ struct abuf{
 };
 
 enum editorKey {
+    BACKSPACE = 127,
     ARROW_LEFT = 1000,
     ARROW_RIGHT,
     ARROW_UP,
@@ -73,7 +75,11 @@ int getWindowSize(int* rows, int* cols);
 int editorRowCxToRx(erow *row, int cx);
 void editorUpdateRow(erow *row);
 void editorAppendRow(char* s, size_t len);
+void editorRowInsertChar(erow *row, int at, int c);
+void editorInsertChar(int c);
+char *editorRowsToString(int *buflen);
 void editorOpen(char *filename);
+void editorSave(void);
 void abAppend(struct abuf *ab, const char *s, int len);
 void abFree(struct abuf *ab);
 void editorScroll(void);
