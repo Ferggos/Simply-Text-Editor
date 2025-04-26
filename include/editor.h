@@ -16,6 +16,7 @@
 #include <sys/ioctl.h>
 #include <time.h>
 #include <sys/types.h>
+#include <ctype.h>
 
 #define NOTAVIM_VERSION "0.0.1"
 #define NOTAVIM_TAB_STOP 8 
@@ -96,6 +97,7 @@ void editorDrawStatusBar(struct abuf *ab);
 void editorDrawMessageBar(struct abuf *ab);
 void editorRefreshScreen(void);
 void editorSetStatusMessage(const char *fmt, ...);
+char *editorPrompt(char* prompt);
 void editorMoveCursor(int key);
 void editorProcessKeypress(void);
 void initEditor(void);
