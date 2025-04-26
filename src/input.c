@@ -47,7 +47,7 @@ void editorProcessKeypress(void){
 
     switch(c){
         case '\r':
-            //TODO
+            editorInsertNewLine();
             break;
 
         case CTRL_KEY('q'):
