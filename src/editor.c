@@ -10,12 +10,12 @@ void die(const char* s){
     exit(1);
 }
 
-void disableRawMode(){
+void disableRawMode(void){
     if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &E.orig_termios) == -1)
         die("tcsetattr");
 }
 
-void enableRawMode(){
+void enableRawMode(void){
     if (tcgetattr(STDIN_FILENO, &E.orig_termios) == -1) die("tcgetattr");
     atexit(disableRawMode);
 
@@ -30,7 +30,7 @@ void enableRawMode(){
     if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1) die("tcsetattr");
 }
 
-int editorReadKey(){
+int editorReadKey(void){
     int nread;
     char c;
     while ((nread = read(STDIN_FILENO, &c, 1)) != 1){

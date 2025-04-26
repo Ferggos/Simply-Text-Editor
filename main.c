@@ -1,6 +1,6 @@
 #include "include/editor.h"
 
-void initEditor(){
+void initEditor(void){
     E.cx = 0;
     E.cy = 0;
     E.rx = 0;
@@ -8,8 +8,12 @@ void initEditor(){
     E.coloff = 0;
     E.numrows = 0;
     E.row = NULL;
+    E.filename = NULL;
+    E.statusmsg[0] = '\0';
+    E.statusmsg_time = 0;
 
     if (getWindowSize(&E.screenrows, &E.screencols) == -1) die("getWindowSize");
+    E.screenrows -= 2;
 }
 
 int main(int argc, char *argv[]){
@@ -18,6 +22,8 @@ int main(int argc, char *argv[]){
     if (argc >= 2){
         editorOpen(argv[1]);
     }
+
+    editorSetStatusMessage("HELP: Ctrl-Q = quit");
 
     while(1){
         editorRefreshScreen();

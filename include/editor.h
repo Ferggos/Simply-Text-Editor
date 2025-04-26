@@ -11,7 +11,9 @@
 #include <termios.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 #include <sys/ioctl.h>
+#include <time.h>
 #include <sys/types.h>
 
 #define NOTAVIM_VERSION "0.0.1"
@@ -54,6 +56,9 @@ struct editorConfig {
     int screencols;
     int numrows;
     erow *row;
+    char *filename;
+    char statusmsg[80];
+    time_t statusmsg_time;
     struct termios orig_termios;
 };
 
@@ -73,7 +78,10 @@ void abAppend(struct abuf *ab, const char *s, int len);
 void abFree(struct abuf *ab);
 void editorScroll(void);
 void editorDrawRows(struct abuf *ab);
+void editorDrawStatusBar(struct abuf *ab);
+void editorDrawMessageBar(struct abuf *ab);
 void editorRefreshScreen(void);
+void editorSetStatusMessage(const char *fmt, ...);
 void editorMoveCursor(int key);
 void editorProcessKeypress(void);
 void initEditor(void);

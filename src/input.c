@@ -40,7 +40,7 @@ void editorMoveCursor(int key){
     }
 }
 
-void editorProcessKeypress(){
+void editorProcessKeypress(void){
     int c = editorReadKey();
 
     switch(c){
