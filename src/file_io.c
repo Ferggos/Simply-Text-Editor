@@ -24,6 +24,8 @@ void editorOpen(char *filename){
     free(E.filename);
     E.filename = strdup(filename);
 
+    editorSelectSyntaxHighlight();
+
     FILE *fp = fopen(filename, "r");
     if (!fp) die("fopen");
 
@@ -43,11 +45,12 @@ void editorOpen(char *filename){
 
 void editorSave(void){
     if (E.filename == NULL){
-        E.filename = editorPrompt("Save as: %s");
+        E.filename = editorPrompt("Save as: %s", NULL);
         if (E.filename == NULL) {
             editorSetStatusMessage("Save aborted");
             return;
         }
+        editorSelectSyntaxHighlight();
     }
     
     int len;

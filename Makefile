@@ -23,4 +23,4 @@ $(BIN): $(OBJ)
 	$(CC) $(OBJ) -o $@
 
 clean:
-	rm -f $(BUILD_DIR) $(BIN)
+	rm -rf $(BUILD_DIR) $(BIN)
